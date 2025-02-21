@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Transformation </title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: rgb(30, 16, 16);
+            background-color: hwb(0 95% 5%);
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Header styles */
+        header {
+            background-image: url('road.jpg  ');
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: hsl(0, 0%, 100%);
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: hsl(0, 0%, 100%);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #7cb342;
+        }
+
+        /* Hero section */
+        .hero {
+            background-image: url(' transporting.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding-top: 80px;
+        }
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #7cb342;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #558b2f;
+        }
+
+        /* About section */
+        .about {
+            padding: 4rem 0;
+            background-color: #fff;
+        }
+        .about h2 {
+            text-align: center;
+            color: #4a6741;
+            margin-bottom: 2rem;
+        }
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+        .about-image {
+            flex: 1;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Contact section */
+        .contact {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+        .contact h2 {
+            text-align: center;
+            color: #4a6741;
+            margin-bottom: 2rem;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a6741;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group textarea {
+            height: 150px;
+        }
+
+        /* Admin section */
+        .admin {
+            padding: 4rem 0;
+            background-color: hsl(0, 0%, 0%);
+        }
+        .admin h2 {
+            text-align: center;
+            color: #4a6741;
+            margin-bottom: 2rem;
+        }
+        .admin-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .admin-card {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            width: calc(33.333% - 2rem);
+        }
+        .admin-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4a6741;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            .admin-card {
+                width: calc(50% - 2rem);
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+            .admin-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Smart Transport</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#admin">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Smart Transport</h1>
+            <p>Connecting you with Best Transporting Vehicle & Safe Travel </p>
+            <a href="login.html" class="btn">Explore Our Smart Transport </a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Smart Transport is a leading provider of innovative and efficient transportation solutions. We specialize in smart mobility, offering safe, reliable, and eco-friendly transport services. Our mission is to enhance urban mobility through technology-driven solutions, reducing congestion and emissions.</p>
+                    <p>With a commitment to customer satisfaction, we ensure seamless and cost-effective travel experiences. Whether for individuals or businesses, we deliver smart, sustainable, and future-ready transport solutions.</p>
+                </div>
+                <div class="about-image">
+                    <img src="bg fr.jpg " alt="Farm produce">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="admin" class="admin">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="admin-info">
+                <div class="admin-card">
+                    <img src="prajwal.jpg " alt="Prajwal Fating">
+                    <h3>Prajwal Fating</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="admin-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                    <h3>Michael Chen</h3>
+                    <p>Head of Operations</p>
+                </div>
+                <div class="admin-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Emily Rodriguez">
+                    <h3>Emily Rodriguez</h3>
+                    <p>Farm Relations Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; made by Hack Titans </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Transport | Login with Night Animation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Night Background Design */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #020024, #090979 70%, #000000);
+            overflow: hidden;
+            z-index: -1; /* Background is behind the login content */
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        .star:nth-child(1) { top: 10%; left: 15%; animation-delay: 0.5s; }
+        .star:nth-child(2) { top: 20%; left: 50%; animation-delay: 1s; }
+        .star:nth-child(3) { top: 30%; left: 80%; animation-delay: 1.5s; }
+        .star:nth-child(4) { top: 50%; left: 25%; animation-delay: 0.2s; }
+        .star:nth-child(5) { top: 60%; left: 65%; animation-delay: 0.8s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Road Design */
+        .road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: #2c3e50;
+        }
+
+        .road-line {
+            position: absolute;
+            bottom: 50%;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                to right,
+                white 0%,
+                white 10%,
+                transparent 10%,
+                transparent 20%
+            );
+            transform: translateY(50%);
+        }
+
+        /* Vehicle Animation */
+        .vehicle {
+            position: absolute;
+            bottom: 20px;
+        }
+
+        .vehicle img {
+            width: 100%;
+        }
+
+        /* Car - moves left to right */
+        .car {
+            width: 100px;
+            bottom: 40px; /* Upper side of the road */
+            animation: moveCar 4s linear infinite;
+        }
+
+        /* Bus - moves right to left */
+        .bus {
+            width: 150px;
+            bottom: 90px; /* Opposite lane */
+            animation: moveBus 4s linear infinite;
+        }
+
+        /* Auto Rickshaw - moves left to right */
+        .auto {
+            width: 80px;
+            bottom: 10px; /* Lower side of the road */
+            animation: moveCar 4s linear infinite;
+            animation-delay: 1s; /* Staggered start */
+        }
+
+        @keyframes moveCar {
+            from {
+                left: -120px;
+            }
+            to {
+                left: 100%;
+            }
+        }
+
+        @keyframes moveBus {
+            from {
+                left: 100%;
+            }
+            to {
+                left: -150px;
+            }
+        }
+
+        /* Login Page Styling */
+        .container {
+            position: relative;
+            z-index: 1; /* Content is above the animated background */
+            max-width: 400px;
+            margin: 100px auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            color: white;
+        }
+
+        h1, h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .checkbox-container input {
+            margin-right: 10px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            background-color: rgba(52, 73, 94, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .glass-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Night Background -->
+    <div class="background">
+        <!-- Stars -->
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+
+        <!-- Road -->
+        <div class="road">
+            <div class="road-line"></div>
+        </div>
+
+        <!-- Vehicles -->
+        <div class="vehicle car">
+            <img src="taxi-removebg-preview.png " alt="Car">
+        </div>
+        <div class="vehicle bus">
+            <img src="bus.png " alt="Bus">
+        </div>
+        <div class="vehicle auto">
+            <img src=" " alt="Auto Rickshaw">
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="container">
+        <div class="glass-card">
+            <h1>Welcome to Smart Transport</h1>
+            <form action="dashboard.html" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember Me</label>
+                    </div>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+        </div>
+    </div>
+
+ 
+</body>
+</html>
