@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,13 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #ff4b1f, #ff9068);
-            animation: backgroundAnimation 5s infinite alternate;
-            
+            background: url('background.jpg') no-repeat center center/cover;
+            animation: backgroundAnimation 10s infinite alternate;
         }
         @keyframes backgroundAnimation {
-            0% { background: linear-gradient(45deg, #00c6ff, #0072ff); }
-            50% { background: linear-gradient(45deg, #ff4b1f, #ff9068); }
-            100% { background: linear-gradient(45deg, #32a852, #ffcc00); }
+            0% { background-color: #00c6ff; }
+            50% { background-color: #ff4b1f; }
+            100% { background-color: #32a852; }
         }
         .navbar {
             display: flex;
@@ -77,21 +77,6 @@
         .btn:hover {
             background: #0056b3;
         }
-        .popup {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            color: black;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .box:hover .popup {
-            display: block;
-        }
         footer {
             text-align: center;
             background: black;
@@ -104,33 +89,35 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="LOGO123.jpg" alt="Smart Transport Logo">
+            <img src=" LOGO123.jpg" alt="Smart Transport Logo">
             Smart Transport
         </div>
         <ul>
-            <li><a href="1homepage.html ">Home</a></li>
+            <li><a href=" 1homepage.html">Home</a></li>
+            <li><a href="2TICKET.html ">Services</a></li>
             <li><a href="login.html">Logout</a></li>
-            <li><a href="#">Services</a></li>
         </ul>
     </nav>
     <div class="container">
         <div class="box">
-            <h2>Smart Stop Optimization</h2>
-            <p>Our system dynamically adjusts bus stops based on demand, reducing unnecessary halts and improving travel efficiency.</p>
-            <a href="2TICKET.html " class="btn">SMART TICKET </a>
-            <div class="popup">More details about Smart Stop Optimization.</div>
+            <h2>METRO</h2>
+            <p>Experience fast and efficient metro transport with minimal wait times.</p>
+            <a href="METROTICKET.html " class="btn">FOR METRO</a>
         </div>
         <div class="box">
-            <h2>AI Traffic Management</h2>
-            <p>Using AI-powered analytics, we provide real-time traffic adjustments to optimize bus routes for faster travel.</p>
-            <a href="ai_traffic.html" class="btn">TRAFFIC</a>
-            <div class="popup">More details about AI Traffic Management.</div>
+            <h2>BUS</h2>
+            <p>Comfortable and affordable bus travel with extensive city coverage.</p>
+            <a href="BUS.html " class="btn">FOR BUS</a>
         </div>
         <div class="box">
-            <h2>Eco-Friendly Route Finder</h2>
-            <p>Our green routing system selects paths that reduce fuel consumption and carbon footprint for a sustainable future.</p>
-            <a href="map.html " class="btn"> MAP</a>
-            <div class="popup">More details about Eco-Friendly Route Finder.</div>
+            <h2>BIKE</h2>
+            <p>Eco-friendly and quick bike-sharing solutions for short distances.</p>
+            <a href="BIKE.HTML " class="btn">FOR BIKE</a>
+        </div>
+        <div class="box">
+            <h2>TAXI</h2>
+            <p>Convenient and cost-effective auto rides for your daily commute.</p>
+            <a href=" TAXI.HTML" class="btn">FOR TAXI</a>
         </div>
     </div>
     <footer>

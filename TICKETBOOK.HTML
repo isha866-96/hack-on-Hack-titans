@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url(' TICKETBGGGG.jpg') no-repeat center center/cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .booking-form {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin: 50px auto;
+            width: 50%;
+            border-radius: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .book-btn {
+            background: green;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Book Your Ticket</h1>
+
+    <div class="booking-form">
+        <form action="confirm_ticket.html" method="post">
+            <input type="text" name="name" placeholder="Enter Your Name" required>
+            <input type="tel" name="phone" placeholder="Enter Your Phone Number" required>
+            <input type="text" name="source" placeholder="Enter Source Point" required>
+            <input type="text" name="destination" placeholder="Enter Destination Point" required>
+
+            <select name="payment" required>
+                <option value="" disabled selected>Select Payment Option</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="UPI">UPI</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Google Pay">Google Pay</option>
+            </select>
+
+            <button type="submit" class="book-btn">Book Now</button>
+        </form>
+    </div>
+
+</body>
+</html>

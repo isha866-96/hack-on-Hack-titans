@@ -5,68 +5,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nagpur Transport Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
-        #map {
-            height: 600px;
-            width: 100%;
+        #map { 
+            height: 80vh; 
+            width: 100%; 
         }
-        .legend {
+        .control-panel { 
+            padding: 20px;
             background: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .filter-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        select, button {
+            margin: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .plus-button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 18px;
+            line-height: 24px;
+            text-align: center;
+            cursor: pointer;
+            margin-left: 10px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .plus-button:hover {
+            background: #1976D2;
+        }
+        .leaflet-popup-content {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Nagpur Transport & Traffic Map</h1>
-    <label for="busStopSelect">Select a Bus Stop:</label>
-    <select id="busStopSelect"></select>
+    <div class="control-panel">
+        <label for="source">Source:</label>
+        <select id="source"></select><br>
+        <label for="destination">Destination:</label>
+        <select id="destination"></select><br>
+        <button onclick="showRoute()">Show Route</button>
+    </div>
+
+    <div class="filter-panel">
+        <h3>Show/Hide Stations</h3>
+        <input type="checkbox" id="showMetro" checked onchange="toggleStations('Metro')" />
+        <label for="showMetro">Metro Stations</label><br>
+        <input type="checkbox" id="showBus" checked onchange="toggleStations('Bus')" />
+        <label for="showBus">Bus Stations</label><br>
+        <input type="checkbox" id="showAuto" checked onchange="toggleStations('Auto')" />
+        <label for="showAuto">Auto Stands</label><br>
+        <input type="checkbox" id="showBike" checked onchange="toggleStations('Bike')" />
+        <label for="showBike">Bike Services</label>
+    </div>
+
     <div id="map"></div>
-    
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <script>
         var map = L.map('map').setView([21.1458, 79.0882], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        
-        var metroStations = [
-            { name: "Sitabuldi", coords: [21.1466, 79.0836] },
-            { name: "Airport", coords: [21.1273, 79.0485] },
-            { name: "Hingna", coords: [21.1232, 79.0201] }
-        ];
 
-        var busStops = [
-            { name: "Ganeshpeth", coords: [21.1465, 79.0902] },
-            { name: "Dharampeth", coords: [21.1381, 79.0748] },
-            { name: "Sadar", coords: [21.1612, 79.0824] }
-        ];
+        var locations = {
+            'Squares': [
+                { name: 'Dharampeth Square', coords: [21.152, 79.066], link: 'dharampeth.html' },
+                { name: 'RBI Square', coords: [21.132, 79.095], link: 'rbi.html' },
+                { name: 'Variety Square', coords: [21.1435, 79.0838], link: 'variety.html' },
+                { name: 'Traffic Park Square', coords: [21.1397, 79.0811], link: 'trafficpark.html' },
+                { name: 'Bajaj Nagar Square', coords: [21.1248, 79.0518], link: 'bajajnagar.html' },
+                { name: 'Shankar Nagar Square', coords: [21.1456, 79.0673], link: 'shankarnagar.html' },
+                { name: 'Sadar Square', coords: [21.1531, 79.0778], link: 'sadar.html' },
+                { name: 'Cotton Market Square', coords: [21.1456, 79.0929], link: 'cottonmarket.html' },
+                { name: 'Mominpura Square', coords: [21.1539, 79.0927], link: 'mominpura.html' },
+                { name: 'Kasturchand Park Square', coords: [21.1489, 79.0814], link: 'kasturchand.html' }
+            ],
+            'Metro Stations': [
+                { name: 'Sitabuldi Metro', coords: [21.147, 79.083], link: 'metro_services.html' },
+                { name: 'Airport Metro', coords: [21.126, 79.090], link: 'metro_services.html' },
+                { name: 'Ajni Metro', coords: [21.1356, 79.0741], link: 'metro_services.html' },
+                { name: 'Rahate Colony Metro', coords: [21.1398, 79.0661], link: 'metro_services.html' }
+            ],
+            'Bus Stations': [
+                { name: 'Ganeshpeth Bus Stand', coords: [21.143, 79.099], link: 'bus_services.html' },
+                { name: 'Maharajbagh Bus Stop', coords: [21.149, 79.088], link: 'bus_services.html' },
+                { name: 'Reshimbagh Bus Stop', coords: [21.1378, 79.0987], link: 'bus_services.html' },
+                { name: 'Medical Square Bus Stop', coords: [21.1492, 79.1012], link: 'bus_services.html' }
+            ],
+            'Auto Stands': [
+                { name: 'Sitabuldi Auto Stand', coords: [21.1468, 79.0834], link: 'auto_services.html' },
+                { name: 'Railway Station Auto Stand', coords: [21.1530, 79.0833], link: 'auto_services.html' },
+                { name: 'Dharampeth Auto Stand', coords: [21.1524, 79.0669], link: 'auto_services.html' },
+                { name: 'Sadar Auto Stand', coords: [21.1535, 79.0776], link: 'auto_services.html' }
+            ],
+            'Bike Services': [
+                { name: 'Sitabuldi Bike Station', coords: [21.1465, 79.0836], link: 'bike_services.html' },
+                { name: 'Dharampeth Bike Station', coords: [21.1522, 79.0671], link: 'bike_services.html' },
+                { name: 'Civil Lines Bike Station', coords: [21.1428, 79.0778], link: 'bike_services.html' },
+                { name: 'Ramdaspeth Bike Station', coords: [21.1389, 79.0725], link: 'bike_services.html' }
+            ]
+        };
 
-        var trafficSquares = [
-            { name: "Dharampeth Square", coords: [21.1385, 79.0771] },
-            { name: "RBI Square", coords: [21.1501, 79.0932] }
-        ];
-        
-        metroStations.forEach(station => {
-            L.marker(station.coords).addTo(map)
-              .bindPopup(`<b>Metro Station</b><br>${station.name}`);
-        });
-        
-        busStops.forEach(stop => {
-            var marker = L.marker(stop.coords).addTo(map)
-              .bindPopup(`<b>Bus Stop</b><br>${stop.name}`);
-            document.getElementById("busStopSelect").innerHTML += `<option value='${stop.name}'>${stop.name}</option>`;
-        });
-        
-        trafficSquares.forEach(square => {
-            L.circle(square.coords, { radius: 100, color: "red" }).addTo(map)
-              .bindPopup(`<b>Traffic Signal</b><br>${square.name}`);
-        });
+        var markers = {};
 
-        document.getElementById("busStopSelect").addEventListener("change", function() {
-            var selectedStop = busStops.find(stop => stop.name === this.value);
-            if (selectedStop) {
-                map.setView(selectedStop.coords, 15);
+        function addMarkers(category) {
+            markers[category] = [];
+            locations[category].forEach(location => {
+                let popupContent = '';
+                
+                if (category === 'Squares') {
+                    popupContent = `
+                        <b>${location.name}</b>
+                        <a href="${location.link}" class="plus-button">+</a>
+                        <br>
+                        <button onclick="showNearbyStations([${location.coords}])">Show Nearby Stations</button>
+                    `;
+                } else {
+                    popupContent = `
+                        <b>${location.name}</b><br>
+                        <a href="${location.link}">View Services</a>
+                    `;
+                }
+
+                let marker = L.marker(location.coords, { 
+                    title: location.name
+                }).bindPopup(popupContent);
+                
+                marker.addTo(map);
+                markers[category].push(marker);
+
+                if (category !== 'Squares') {
+                    let option = new Option(location.name, JSON.stringify(location.coords));
+                    document.getElementById('source').appendChild(option.cloneNode(true));
+                    document.getElementById('destination').appendChild(option);
+                }
+            });
+        }
+
+        function toggleStations(category) {
+            const isChecked = document.getElementById(`show${category}`).checked;
+            markers[category + ' Stations'].forEach(marker => {
+                if (isChecked) {
+                    marker.addTo(map);
+                } else {
+                    marker.remove();
+                }
+            });
+        }
+
+        function showNearbyStations(squareCoords) {
+            const MAX_DISTANCE = 0.01; // Roughly 1km in coordinates
+            let nearby = [];
+
+            ['Metro Stations', 'Bus Stations', 'Auto Stands', 'Bike Services'].forEach(category => {
+                locations[category].forEach(station => {
+                    let distance = Math.sqrt(
+                        Math.pow(squareCoords[0] - station.coords[0], 2) +
+                        Math.pow(squareCoords[1] - station.coords[1], 2)
+                    );
+                    if (distance < MAX_DISTANCE) {
+                        nearby.push(station);
+                    }
+                });
+            });
+
+            let content = '<h3>Nearby Stations:</h3>';
+            nearby.forEach(station => {
+                content += `<p>${station.name} - <a href="${station.link}">View Services</a></p>`;
+            });
+
+            L.popup()
+                .setLatLng(squareCoords)
+                .setContent(content)
+                .openOn(map);
+        }
+
+        function showRoute() {
+            let sourceCoords = JSON.parse(document.getElementById('source').value);
+            let destCoords = JSON.parse(document.getElementById('destination').value);
+            
+            if (window.currentRoute) {
+                map.removeLayer(window.currentRoute);
             }
+
+            window.currentRoute = L.polyline([sourceCoords, destCoords], {
+                color: 'red',
+                weight: 3,
+                opacity: 0.7
+            }).addTo(map);
+
+            map.fitBounds(window.currentRoute.getBounds(), {
+                padding: [50, 50]
+            });
+        }
+
+        // Initialize all markers
+        Object.keys(locations).forEach(category => {
+            addMarkers(category);
         });
     </script>
 </body>
