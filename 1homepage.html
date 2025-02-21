@@ -1,280 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Transport | Login with Night Animation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Smart Transport</title>
     <style>
-        * {
+        body {
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff4b1f, #ff9068);
+            animation: backgroundAnimation 5s infinite alternate;
+            
         }
-
-        body, html {
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+            50% { background: linear-gradient(45deg, #ff4b1f, #ff9068); }
+            100% { background: linear-gradient(45deg, #32a852, #ffcc00); }
         }
-
-        /* Night Background Design */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, #020024, #090979 70%, #000000);
-            overflow: hidden;
-            z-index: -1; /* Background is behind the login content */
-        }
-
-        /* Stars */
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite ease-in-out;
-        }
-
-        .star:nth-child(1) { top: 10%; left: 15%; animation-delay: 0.5s; }
-        .star:nth-child(2) { top: 20%; left: 50%; animation-delay: 1s; }
-        .star:nth-child(3) { top: 30%; left: 80%; animation-delay: 1.5s; }
-        .star:nth-child(4) { top: 50%; left: 25%; animation-delay: 0.2s; }
-        .star:nth-child(5) { top: 60%; left: 65%; animation-delay: 0.8s; }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Road Design */
-        .road {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 150px;
-            background: #2c3e50;
-        }
-
-        .road-line {
-            position: absolute;
-            bottom: 50%;
-            width: 100%;
-            height: 4px;
-            background: repeating-linear-gradient(
-                to right,
-                white 0%,
-                white 10%,
-                transparent 10%,
-                transparent 20%
-            );
-            transform: translateY(50%);
-        }
-
-        /* Vehicle Animation */
-        .vehicle {
-            position: absolute;
-            bottom: 20px;
-        }
-
-        .vehicle img {
-            width: 100%;
-        }
-
-        /* Car - moves left to right */
-        .car {
-            width: 100px;
-            bottom: 40px; /* Upper side of the road */
-            animation: moveCar 4s linear infinite;
-        }
-
-        /* Bus - moves right to left */
-        .bus {
-            width: 150px;
-            bottom: 90px; /* Opposite lane */
-            animation: moveBus 4s linear infinite;
-        }
-
-        /* Auto Rickshaw - moves left to right */
-        .auto {
-            width: 80px;
-            bottom: 10px; /* Lower side of the road */
-            animation: moveCar 4s linear infinite;
-            animation-delay: 1s; /* Staggered start */
-        }
-
-        @keyframes moveCar {
-            from {
-                left: -120px;
-            }
-            to {
-                left: 100%;
-            }
-        }
-
-        @keyframes moveBus {
-            from {
-                left: 100%;
-            }
-            to {
-                left: -150px;
-            }
-        }
-
-        /* Login Page Styling */
-        .container {
-            position: relative;
-            z-index: 1; /* Content is above the animated background */
-            max-width: 400px;
-            margin: 100px auto;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 20px;
             color: white;
         }
-
-        h1, h2 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-group input[type="email"],
-        .form-group input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .form-group .checkbox-container {
+        .navbar .logo {
             display: flex;
             align-items: center;
+            font-size: 22px;
+            font-weight: bold;
         }
-
-        .form-group .checkbox-container input {
+        .navbar .logo img {
+            height: 30px;
             margin-right: 10px;
         }
-
-        .forgot-password {
-            text-align: right;
-            margin-top: 10px;
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
         }
-
-        .forgot-password a {
-            color: #3498db;
+        .navbar ul li a {
+            color: white;
             text-decoration: none;
+            padding: 8px 12px;
         }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background-color: #2980b9;
-        }
-
-        footer {
-            background-color: rgba(52, 73, 94, 0.8);
-            color: white;
+        .container {
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .glass-card {
-                padding: 20px;
-            }
+        .box {
+            background: black;
+            color: white;
+            padding: 20px;
+            width: 30%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .box:hover {
+            transform: scale(1.05);
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #0072ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .popup {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .box:hover .popup {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            background: black;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Animated Night Background -->
-    <div class="background">
-        <!-- Stars -->
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-
-        <!-- Road -->
-        <div class="road">
-            <div class="road-line"></div>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="LOGO123.jpg" alt="Smart Transport Logo">
+            Smart Transport
         </div>
-
-        <!-- Vehicles -->
-        <div class="vehicle car">
-            <img src="taxi-removebg-preview.png " alt="Car">
-        </div>
-        <div class="vehicle bus">
-            <img src="bus.png " alt="Bus">
-        </div>
-        <div class="vehicle auto">
-            <img src=" " alt="Auto Rickshaw">
-        </div>
-    </div>
-
-    <!-- Login Section -->
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
     <div class="container">
-        <div class="glass-card">
-            <h1>Welcome to Smart Transport</h1>
-            <form action="dashboard.html" method="post">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Remember Me</label>
-                    </div>
-                </div>
-                <div class="forgot-password">
-                    <a href="#">Forgot Password?</a>
-                </div>
-                <button type="submit" class="login-btn">Log In</button>
-            </form>
+        <div class="box">
+            <h2>Smart Stop Optimization</h2>
+            <p>Our system dynamically adjusts bus stops based on demand, reducing unnecessary halts and improving travel efficiency.</p>
+            <a href="smart_stop.html" class="btn">Learn More</a>
+            <div class="popup">More details about Smart Stop Optimization.</div>
+        </div>
+        <div class="box">
+            <h2>AI Traffic Management</h2>
+            <p>Using AI-powered analytics, we provide real-time traffic adjustments to optimize bus routes for faster travel.</p>
+            <a href="ai_traffic.html" class="btn">Learn More</a>
+            <div class="popup">More details about AI Traffic Management.</div>
+        </div>
+        <div class="box">
+            <h2>Eco-Friendly Route Finder</h2>
+            <p>Our green routing system selects paths that reduce fuel consumption and carbon footprint for a sustainable future.</p>
+            <a href="eco_route.html" class="btn">Learn More</a>
+            <div class="popup">More details about Eco-Friendly Route Finder.</div>
         </div>
     </div>
-
- 
+    <footer>
+        <p>About Us: We are committed to revolutionizing smart transport with AI-driven solutions for a better future.</p>
+    </footer>
 </body>
 </html>
