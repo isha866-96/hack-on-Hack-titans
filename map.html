@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagpur Transport Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        .legend {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nagpur Transport & Traffic Map</h1>
+    <label for="busStopSelect">Select a Bus Stop:</label>
+    <select id="busStopSelect"></select>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([21.1458, 79.0882], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        var metroStations = [
+            { name: "Sitabuldi", coords: [21.1466, 79.0836] },
+            { name: "Airport", coords: [21.1273, 79.0485] },
+            { name: "Hingna", coords: [21.1232, 79.0201] }
+        ];
+
+        var busStops = [
+            { name: "Ganeshpeth", coords: [21.1465, 79.0902] },
+            { name: "Dharampeth", coords: [21.1381, 79.0748] },
+            { name: "Sadar", coords: [21.1612, 79.0824] }
+        ];
+
+        var trafficSquares = [
+            { name: "Dharampeth Square", coords: [21.1385, 79.0771] },
+            { name: "RBI Square", coords: [21.1501, 79.0932] }
+        ];
+        
+        metroStations.forEach(station => {
+            L.marker(station.coords).addTo(map)
+              .bindPopup(`<b>Metro Station</b><br>${station.name}`);
+        });
+        
+        busStops.forEach(stop => {
+            var marker = L.marker(stop.coords).addTo(map)
+              .bindPopup(`<b>Bus Stop</b><br>${stop.name}`);
+            document.getElementById("busStopSelect").innerHTML += `<option value='${stop.name}'>${stop.name}</option>`;
+        });
+        
+        trafficSquares.forEach(square => {
+            L.circle(square.coords, { radius: 100, color: "red" }).addTo(map)
+              .bindPopup(`<b>Traffic Signal</b><br>${square.name}`);
+        });
+
+        document.getElementById("busStopSelect").addEventListener("change", function() {
+            var selectedStop = busStops.find(stop => stop.name === this.value);
+            if (selectedStop) {
+                map.setView(selectedStop.coords, 15);
+            }
+        });
+    </script>
+</body>
+</html>
